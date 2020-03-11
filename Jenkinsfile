@@ -11,16 +11,17 @@ pipeline {
             steps {
                 echo 'Deploying....'
                 sh 'export KUBECONFIG=/home/niel/kubeconfig'
-                sh 'oc create -f deployment.yaml'
+                sh 'oc apply -f deployment.yaml'
             }
         }
         stage('Test') {
             steps {
-              sh 'sleep 5'
-              sh 'oc get pods'
-              sh 'oc get deploy'
-              sh 'oc get pvc'
-              sh 'oc get pv'
+                sh 'export KUBECONFIG=/home/niel/kubeconfig'
+                sh 'sleep 5'
+                sh 'oc get pods'
+                sh 'oc get deploy'
+                sh 'oc get pvc'
+                sh 'oc get pv'
             }
         }
     }
