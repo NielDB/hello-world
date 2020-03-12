@@ -3,8 +3,8 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                sh 'docker image build -t 35.187.184.199:5000/testje/nginx:latest .'
-                sh 'docker push 35.187.184.199:5000/testje/nginx:latest'
+                sh 'docker image build -t nexus-docker.flowfactor.be/mijnen_nginx:latest .'
+                sh 'docker push nexus-docker.flowfactor.be/mijnen_nginx:latest'
             }
         }
         stage('Deploy') {
