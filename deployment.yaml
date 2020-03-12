@@ -12,7 +12,7 @@ spec:
     spec:
       containers:
       - name: hello-world
-        image: nexus-docker.flowfactor.be/mijnen_world:latest
+        image: nexus-docker.flowfactor.be/mijnen_nginx:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 80
