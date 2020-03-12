@@ -1,41 +1,33 @@
-apiVersion: apps/v1
+apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: nginx-deployment
-  labels:
-    app: nginx
+  name: hello-world
+  namespace: default
 spec:
   replicas: 1
-  selector:
-    matchLabels:
-      app: nginx
   template:
     metadata:
       labels:
-        app: nginx
+        app: hello-world
     spec:
       containers:
-      - name: nginx
-        image: 35.187.184.199:5000/testje/nginx:latest
+      - name: hello-world
+        image: nexus-docker.flowfactor.be/mijnen_world:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 80
-        volumeMounts:
-        - name: ocp-persistent-storage
-          mountPath: /ocp
-      volumes:
-      - name: ocp-persistent-storage
-        persistentVolumeClaim:
-          claimName: pvc-test
+      imagePullSecrets:
+      - name: regsecret
 ---
 apiVersion: v1
-kind: PersistentVolumeClaim
+kind: Service
 metadata:
-  name: pvc-test
+  name: hello-world-service
+  namespace: default
 spec:
-  accessModes:
-  - ReadWriteOnce
-  persistentVolumeReclaimPolicy: Retain
-  resources:
-    requests:
-      storage: 10Gi
-  storageClassName: sc-gcp
+  ports:
+  - port: 80
+    nodePort: 30000
+  selector:
+    app: hello-world
+  type: NodePort
